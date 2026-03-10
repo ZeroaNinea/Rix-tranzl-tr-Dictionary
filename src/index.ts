@@ -1,5 +1,5 @@
 /*
-The current algorithm moves all duplicate keys into arrays.
+Moves duplicate keys into arrays and stores all original cases.
 */
 
 import fs from 'fs';
@@ -11,9 +11,14 @@ const raw = fs.readFileSync(
 
 const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
 
-const dict: Record<string, { phonetics: string[]; correctCase?: string }> = {};
+type DictEntry = {
+  phonetics: string[];
+  cases: string[];
+};
 
-let match;
+const dict: Record<string, DictEntry> = {};
+
+let match: RegExpExecArray | null;
 
 while ((match = regex.exec(raw)) !== null) {
   const originalKey = match[1];
@@ -24,14 +29,18 @@ while ((match = regex.exec(raw)) !== null) {
   if (!dict[lower!]) {
     dict[lower!] = {
       phonetics: [],
-      correctCase: originalKey,
+      cases: [],
     } as {
       phonetics: string[];
-      correctCase?: string;
+      cases: string[];
     };
   }
 
   dict[lower!]?.phonetics?.push(value!);
+
+  if (!dict[lower!]?.cases?.includes(originalKey!)) {
+    dict[lower!]?.cases?.push(originalKey!);
+  }
 }
 
 fs.writeFileSync(
