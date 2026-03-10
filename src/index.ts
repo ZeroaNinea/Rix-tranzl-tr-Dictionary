@@ -36,7 +36,9 @@ while ((match = regex.exec(raw)) !== null) {
     };
   }
 
-  dict[lower!]?.phonetics?.push(value!);
+  if (!dict[lower!]?.phonetics?.includes(value!)) {
+    dict[lower!]?.phonetics?.push(value!);
+  }
 
   if (!dict[lower!]?.cases?.includes(originalKey!)) {
     dict[lower!]?.cases?.push(originalKey!);
