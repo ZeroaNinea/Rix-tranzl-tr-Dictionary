@@ -31,7 +31,7 @@ while ((match = regex.exec(raw)) !== null) {
     };
   }
 
-  dict[lower!]?.phonetics.push(value!);
+  dict[lower!]?.phonetics?.push(value!);
 }
 
 fs.writeFileSync(
