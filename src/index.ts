@@ -15,7 +15,7 @@ const frequencies = JSON.parse(
 );
 
 frequencies.map((w: { word: string; count: number }) => {
-  if (w.word === 'put') {
+  if (w.word === 'read') {
     console.log(w);
 
     return;
