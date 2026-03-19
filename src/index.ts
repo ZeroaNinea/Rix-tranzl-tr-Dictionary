@@ -5,8 +5,8 @@ Moves duplicate keys into arrays and stores all original cases.
 // import subtlex from 'subtlex-word-frequencies';
 import fs from 'fs';
 import path from 'path';
-import * as wndb from 'wordnet-db';
-import { detectNewline } from 'detect-newline';
+// import * as wndb from 'wordnet-db';
+// import { detectNewline } from 'detect-newline';
 
 let bad = false;
 
