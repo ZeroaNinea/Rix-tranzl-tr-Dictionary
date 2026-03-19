@@ -1,6 +1,4 @@
 declare module 'wordnet-db' {
-  // export function getSynonyms(word: string): string[];
-
   export function getSynonyms(word: string, pos: string): string[];
 
   export const path: string;

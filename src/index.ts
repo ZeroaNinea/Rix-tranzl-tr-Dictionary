@@ -1,6 +1,5 @@
 /*
 Moves duplicate keys into arrays and stores all original cases.
-Adds the frequency of each phonetic transcription.
 */
 
 // import subtlex from 'subtlex-word-frequencies';
