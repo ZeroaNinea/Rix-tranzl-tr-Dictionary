@@ -5,6 +5,30 @@ Adds the frequency of each phonetic transcription.
 
 // import subtlex from 'subtlex-word-frequencies';
 import fs from 'fs';
+import path from 'path';
+import * as wndb from 'wordnet-db';
+import { detectNewline } from 'detect-newline';
+
+let bad = false;
+
+// console.log(wndb.path, wndb.files, wndb.version, wndb.libVersion);
+
+// wndb.files.forEach(function (file, index) {
+//   const fc = fs.readFileSync(path.join(wndb.path, file), 'utf-8');
+//   const endingType = detectNewline(fc);
+
+//   if (endingType !== '\n') {
+//     console.log(' ✖', file, JSON.stringify(endingType));
+//     bad || true;
+//   } else {
+//     console.log('✔', file, JSON.stringify(endingType));
+//   }
+
+//   if (index === wndb.files.length - 1) {
+//     // done:
+//     process.exit(bad ? 1 : 0);
+//   }
+// });
 
 const raw = fs.readFileSync(
   './dictionary/English-phonetic-transcription.json',
@@ -22,43 +46,43 @@ const raw = fs.readFileSync(
 //   }
 // });
 
-const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
+// const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
 
-type DictEntry = {
-  phonetics: string[];
-  cases: string[];
-};
+// type DictEntry = {
+//   phonetics: string[];
+//   cases: string[];
+// };
 
-const dict: Record<string, DictEntry> = {};
+// const dict: Record<string, DictEntry> = {};
 
-let match: RegExpExecArray | null;
+// let match: RegExpExecArray | null;
 
-while ((match = regex.exec(raw)) !== null) {
-  const originalKey = match[1];
-  const value = match[2];
+// while ((match = regex.exec(raw)) !== null) {
+//   const originalKey = match[1];
+//   const value = match[2];
 
-  const lower = originalKey?.toLowerCase();
+//   const lower = originalKey?.toLowerCase();
 
-  if (!dict[lower!]) {
-    dict[lower!] = {
-      phonetics: [],
-      cases: [],
-    } as {
-      phonetics: string[];
-      cases: string[];
-    };
-  }
+//   if (!dict[lower!]) {
+//     dict[lower!] = {
+//       phonetics: [],
+//       cases: [],
+//     } as {
+//       phonetics: string[];
+//       cases: string[];
+//     };
+//   }
 
-  if (!dict[lower!]?.phonetics?.includes(value!)) {
-    dict[lower!]?.phonetics?.push(value!);
-  }
+//   if (!dict[lower!]?.phonetics?.includes(value!)) {
+//     dict[lower!]?.phonetics?.push(value!);
+//   }
 
-  if (!dict[lower!]?.cases?.includes(originalKey!)) {
-    dict[lower!]?.cases?.push(originalKey!);
-  }
-}
+//   if (!dict[lower!]?.cases?.includes(originalKey!)) {
+//     dict[lower!]?.cases?.push(originalKey!);
+//   }
+// }
 
-fs.writeFileSync(
-  './dictionary/English-phonetic-transcription-fixed.json',
-  JSON.stringify(dict, null, 2),
-);
+// fs.writeFileSync(
+//   './dictionary/English-phonetic-transcription-fixed.json',
+//   JSON.stringify(dict, null, 2),
+// );

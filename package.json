@@ -26,6 +26,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "subtlex-word-frequencies": "^2.0.0"
+    "detect-newline": "^4.0.1",
+    "subtlex-word-frequencies": "^2.0.0",
+    "wordnet-db": "^3.1.14"
   }
 }
