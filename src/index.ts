@@ -58,6 +58,8 @@ type ReversedDictEntry = {
   frequency: number;
 }[];
 
+const reversedDict: Record<string, ReversedDictEntry> = {};
+
 /*
 {
   "flawr": {
