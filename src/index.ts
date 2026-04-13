@@ -71,23 +71,38 @@ let match: RegExpExecArray | null;
 
 while ((match = regex.exec(raw)) !== null) {
   const originalKey = match[1];
-  const value = match[2];
+  const phonetic = match[2];
 
-  // console.log(originalKey, value);
+  const rix = asciiToRixespek(phonetic!);
 
-  reversedDict[asciiToRixespek(value!)] = {
-    words: [
-      {
-        value: originalKey!,
-        frequency: freqMap[originalKey!.toLowerCase()]!,
-      },
-    ],
-    phonetics: [value!],
-  };
+  // 1. Create entry if not exists.
+  if (!reversedDict[rix]) {
+    reversedDict[rix] = {
+      words: [],
+      phonetics: [],
+    };
+  }
 
-  reversedDict[asciiToRixespek(value!)]!.words = reversedDict[
-    asciiToRixespek(value!)
-  ]!.words.sort((a, b) => b.frequency - a.frequency);
+  const entry = reversedDict[rix];
+
+  const frequency = freqMap[originalKey!.toLowerCase()] ?? 0;
+
+  // 2. Avoid duplicate WORDS (case-insensitive).
+  const exists = entry.words.some(
+    (w) => w.value.toLowerCase() === originalKey!.toLowerCase(),
+  );
+
+  if (!exists) {
+    entry.words.push({
+      value: originalKey!,
+      frequency,
+    });
+  }
+
+  // 3. Avoid duplicate phonetics.
+  if (!entry.phonetics.includes(phonetic!)) {
+    entry.phonetics.push(phonetic!);
+  }
 }
 
 fs.writeFileSync(
