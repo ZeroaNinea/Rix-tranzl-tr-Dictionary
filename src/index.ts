@@ -51,14 +51,49 @@ frequencies.map((w: { word: string; count: number }) => {
 
 import asciiToRixespek from './helpers/ascii-to-rixespek.js';
 
-console.log(asciiToRixespek("'flaU@R"));
+// console.log(asciiToRixespek("'flaU@R"));
 
 type ReversedDictEntry = {
   words: { value: string; frequency: number }[];
   phonetics: string[];
 };
 
-const reversedDict: Record<string, ReversedDictEntry> = {};
+let reversedDict: Record<string, ReversedDictEntry> = {};
+const freqMap: Record<string, number> = {};
+
+for (const w of frequencies) {
+  freqMap[w.word.toLowerCase()] = w.count;
+}
+
+const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
+
+let match: RegExpExecArray | null;
+
+while ((match = regex.exec(raw)) !== null) {
+  const originalKey = match[1];
+  const value = match[2];
+
+  // console.log(originalKey, value);
+
+  reversedDict[asciiToRixespek(value!)] = {
+    words: [
+      {
+        value: originalKey!,
+        frequency: freqMap[originalKey!.toLowerCase()]!,
+      },
+    ],
+    phonetics: [value!],
+  };
+
+  reversedDict[asciiToRixespek(value!)]!.words = reversedDict[
+    asciiToRixespek(value!)
+  ]!.words.sort((a, b) => b.frequency - a.frequency);
+}
+
+fs.writeFileSync(
+  './dictionary/Rixespek-to-English.json',
+  JSON.stringify(reversedDict, null, 2),
+);
 
 /*
 {
