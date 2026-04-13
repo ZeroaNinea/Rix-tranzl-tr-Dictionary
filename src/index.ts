@@ -55,7 +55,7 @@ console.log(asciiToRixespek("'flaU@R"));
 
 type ReversedDictEntry = {
   words: { value: string; frequency: number }[];
-  phonetics: string;
+  phonetics: string[];
 };
 
 const reversedDict: Record<string, ReversedDictEntry> = {};
@@ -73,7 +73,7 @@ const reversedDict: Record<string, ReversedDictEntry> = {};
         frequency: 161
       }
     ],
-    phonetics: "'flaU@R"
+    phonetics: ["'flaU@R"]
   }
 }
 */
