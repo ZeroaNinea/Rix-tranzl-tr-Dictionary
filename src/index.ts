@@ -4,11 +4,11 @@ Moves duplicate keys into arrays and stores all original cases.
 
 // import subtlex from 'subtlex-word-frequencies';
 import fs from 'fs';
-import path from 'path';
+// import path from 'path';
 // import * as wndb from 'wordnet-db';
 // import { detectNewline } from 'detect-newline';
 
-let bad = false;
+// let bad = false;
 
 // console.log(wndb.path, wndb.files, wndb.version, wndb.libVersion);
 
@@ -29,6 +29,8 @@ let bad = false;
 //   }
 // });
 
+// Word Frequencies
+
 const raw = fs.readFileSync(
   './dictionary/English-phonetic-transcription.json',
   'utf8',
@@ -45,43 +47,49 @@ frequencies.map((w: { word: string; count: number }) => {
   }
 });
 
-const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
+// Generating Rixēspēk to English Dictionary
 
-type DictEntry = {
-  phonetics: string[];
-  cases: string[];
-};
+import asciiToRixespek from './helpers/ascii-to-rixespek.js';
 
-const dict: Record<string, DictEntry> = {};
+// Generating English to Rixēspēk Dictionary
 
-let match: RegExpExecArray | null;
+// const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
 
-while ((match = regex.exec(raw)) !== null) {
-  const originalKey = match[1];
-  const value = match[2];
+// type DictEntry = {
+//   phonetics: string[];
+//   cases: string[];
+// };
 
-  const lower = originalKey?.toLowerCase();
+// const dict: Record<string, DictEntry> = {};
 
-  if (!dict[lower!]) {
-    dict[lower!] = {
-      phonetics: [],
-      cases: [],
-    } as {
-      phonetics: string[];
-      cases: string[];
-    };
-  }
+// let match: RegExpExecArray | null;
 
-  if (!dict[lower!]?.phonetics?.includes(value!)) {
-    dict[lower!]?.phonetics?.push(value!);
-  }
+// while ((match = regex.exec(raw)) !== null) {
+//   const originalKey = match[1];
+//   const value = match[2];
 
-  if (!dict[lower!]?.cases?.includes(originalKey!)) {
-    dict[lower!]?.cases?.push(originalKey!);
-  }
-}
+//   const lower = originalKey?.toLowerCase();
 
-fs.writeFileSync(
-  './dictionary/English-phonetic-transcription-fixed.json',
-  JSON.stringify(dict, null, 2),
-);
+//   if (!dict[lower!]) {
+//     dict[lower!] = {
+//       phonetics: [],
+//       cases: [],
+//     } as {
+//       phonetics: string[];
+//       cases: string[];
+//     };
+//   }
+
+//   if (!dict[lower!]?.phonetics?.includes(value!)) {
+//     dict[lower!]?.phonetics?.push(value!);
+//   }
+
+//   if (!dict[lower!]?.cases?.includes(originalKey!)) {
+//     dict[lower!]?.cases?.push(originalKey!);
+//   }
+// }
+
+// fs.writeFileSync(
+//   './dictionary/English-phonetic-transcription-fixed.json',
+//   JSON.stringify(dict, null, 2),
+// );
