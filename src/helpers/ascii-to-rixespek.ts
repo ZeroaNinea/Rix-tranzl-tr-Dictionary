@@ -112,43 +112,28 @@ function escapeRegex(str: string): string {
 }
 
 function asciiToRixespek(text: string): string {
-  // for (const key in charsAtWordStart) {
-  //   const regex = new RegExp('^' + escapeRegex(key), 'i');
-  //   text = text.replace(regex, charsAtWordStart[key]);
-  // }
+  for (const [key, value] of Object.entries(charsAtWordStart)) {
+    const regex = new RegExp('^' + escapeRegex(key), 'i');
+    text = text.replace(regex, value);
+  }
 
-  (Object.values(charsAtWordStart) as string[]).forEach((char) => {
-    const regex = new RegExp('^' + escapeRegex(char), 'i');
-    text = text.replace(regex, char);
-  });
+  for (const [key, value] of Object.entries(charsAtWordEnd)) {
+    // if (text === 'eI') {
+    //   continue;
+    // }
 
-  // for (const key in charsAtWordEnd) {
-  //   // if (text === 'eI') {
-  //   //   continue;
-  //   // }
+    const regex = new RegExp(escapeRegex(key) + '$', 'i');
+    text = text.replace(regex, value);
+  }
 
-  //   const regex = new RegExp(escapeRegex(key) + '$', 'i');
-  //   text = text.replace(regex, charsAtWordEnd[key]);
-  // }
+  for (const [key, value] of Object.entries(rixespekReplacements)) {
+    // if (text.endsWith('tu')) {
+    //   continue;
+    // }
 
-  (Object.values(charsAtWordEnd) as string[]).forEach((char) => {
-    const regex = new RegExp(escapeRegex(char) + '$', 'i');
-    text = text.replace(regex, char);
-  });
-
-  // for (const key in rixespekReplacements) {
-  //   // if (text.endsWith('tu')) {
-  //   //   continue;
-  //   // }
-
-  //   const regex = new RegExp(escapeRegex(key), 'g');
-  //   text = text.replace(regex, rixespekReplacements[key]);
-  // }
-
-  (Object.values(rixespekReplacements) as string[]).forEach((char) => {
-    const regex = new RegExp(escapeRegex(char), 'g');
-    text = text.replace(regex, char);
-  });
+    const regex = new RegExp(escapeRegex(key), 'g');
+    text = text.replace(regex, value);
+  }
 
   return text;
 }

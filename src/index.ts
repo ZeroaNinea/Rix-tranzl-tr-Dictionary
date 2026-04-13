@@ -51,6 +51,30 @@ frequencies.map((w: { word: string; count: number }) => {
 
 import asciiToRixespek from './helpers/ascii-to-rixespek.js';
 
+console.log(asciiToRixespek("'flaU@R"));
+
+type ReversedDictEntry = {
+  value: string;
+  frequency: number;
+}[];
+
+/*
+{
+  "flawr": {
+    words: [
+      {
+        value: "flower",
+        frequency: 1161
+      },
+      {
+        value: "flour",
+        frequency: 161
+      }
+    ],
+  }
+}
+*/
+
 // Generating English to Rixēspēk Dictionary
 
 // const regex = /"([^"]+)"\s*:\s*"([^"]+)"/g;
