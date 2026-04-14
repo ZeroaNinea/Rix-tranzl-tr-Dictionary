@@ -77,6 +77,13 @@ export default function generateRixespekToEnglishDictionary() {
     }
   }
 
+  for (const [key, value] of Object.entries(reversedDict)) {
+    value.words.sort(
+      (a: { frequency: number }, b: { frequency: number }) =>
+        b.frequency - a.frequency,
+    );
+  }
+
   fs.writeFileSync(
     './dictionary/Rixespek-to-English.json',
     JSON.stringify(reversedDict, null, 2),
